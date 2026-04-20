@@ -1,0 +1,486 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+.pc-wrap {
+  font-family: var(--font-sans);
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #26215C 0%, #533496 40%, #993556 80%, #4A1B0C 100%);
+  border-radius: var(--border-radius-lg);
+  min-height: 600px;
+}
+
+.pc-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.pc-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  padding: 8px 20px;
+  margin-bottom: 10px;
+}
+
+.pc-logo-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: #FAC775;
+  box-shadow: 0 0 8px #FAC775;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.8); }
+}
+
+.pc-logo span {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.9);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pc-title {
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.pc-subtitle {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 4px;
+}
+
+.pc-editors {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pc-editor-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.pc-editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.pc-editor-label {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pc-badge-a {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #AFA9EC, #7F77DD);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500; color: #fff;
+}
+
+.pc-badge-b {
+  width: 22px; height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #F0997B, #D85A30);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 500; color: #fff;
+}
+
+.pc-editor-label span { color: rgba(255,255,255,0.75); }
+
+.pc-load-btn {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pc-load-btn:hover {
+  background: rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.9);
+}
+
+textarea.pc-ta {
+  width: 100%;
+  height: 130px;
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  padding: 12px 14px;
+  resize: none;
+  outline: none;
+}
+
+textarea.pc-ta::placeholder { color: rgba(255,255,255,0.25); }
+
+.pc-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.pc-analyze-btn {
+  background: linear-gradient(135deg, #AFA9EC 0%, #7F77DD 50%, #D4537E 100%);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  padding: 12px 36px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.03em;
+  position: relative;
+  overflow: hidden;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.pc-analyze-btn:hover { opacity: 0.9; }
+.pc-analyze-btn:active { transform: scale(0.97); }
+
+.pc-analyze-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%; width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+.pc-results {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.pc-gauge-wrap {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: var(--border-radius-lg);
+  padding: 20px 18px;
+  text-align: center;
+  min-width: 160px;
+}
+
+.pc-gauge-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 14px;
+}
+
+.pc-arc-svg { display: block; margin: 0 auto; }
+
+.pc-gauge-pct {
+  font-size: 32px;
+  font-weight: 500;
+  color: #fff;
+  margin-top: 8px;
+  line-height: 1;
+}
+
+.pc-gauge-verdict {
+  font-size: 11px;
+  margin-top: 6px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pc-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pc-metric {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--border-radius-md);
+  padding: 12px 14px;
+}
+
+.pc-metric-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 6px;
+}
+
+.pc-metric-value {
+  font-size: 22px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.pc-metric-bar-track {
+  height: 3px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.pc-metric-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.8s ease;
+  width: 0%;
+}
+
+.pc-snippet-card {
+  grid-column: 1 / -1;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--border-radius-lg);
+  padding: 16px;
+  margin-top: 4px;
+}
+
+.pc-snippet-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 10px;
+}
+
+.pc-snippet-text {
+  font-size: 13px;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+}
+
+.pc-snippet-text .highlight {
+  background: linear-gradient(90deg, #FAC775, #EF9F27);
+  color: #412402;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.pc-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 8px 0;
+}
+
+input[type=file] { display: none; }
+</style>
+
+<div class="pc-wrap">
+  <div class="pc-header">
+    <div class="pc-logo">
+      <div class="pc-logo-dot"></div>
+      <span>PlagCheck Pro</span>
+    </div>
+    <div class="pc-title">Plagiarism Detection</div>
+    <div class="pc-subtitle">Multi-algorithm similarity analysis</div>
+  </div>
+
+  <input type="file" id="fileA" accept=".txt" onchange="loadA(event)">
+  <input type="file" id="fileB" accept=".txt" onchange="loadB(event)">
+
+  <div class="pc-editors">
+    <div class="pc-editor-card">
+      <div class="pc-editor-header">
+        <div class="pc-editor-label">
+          <div class="pc-badge-a">A</div>
+          <span>Base Document</span>
+        </div>
+        <button class="pc-load-btn" onclick="document.getElementById('fileA').click()">Load file</button>
+      </div>
+      <textarea class="pc-ta" id="text1" placeholder="Paste or load document A here..."></textarea>
+    </div>
+    <div class="pc-editor-card">
+      <div class="pc-editor-header">
+        <div class="pc-editor-label">
+          <div class="pc-badge-b">B</div>
+          <span>Compare Document</span>
+        </div>
+        <button class="pc-load-btn" onclick="document.getElementById('fileB').click()">Load file</button>
+      </div>
+      <textarea class="pc-ta" id="text2" placeholder="Paste or load document B here..."></textarea>
+    </div>
+  </div>
+
+  <div class="pc-actions">
+    <button class="pc-analyze-btn" onclick="analyze()">Run Analysis</button>
+  </div>
+
+  <div id="resultArea" style="display:none;">
+    <div class="pc-results">
+      <div class="pc-gauge-wrap">
+        <div class="pc-gauge-title">Overall</div>
+        <svg class="pc-arc-svg" width="120" height="70" viewBox="0 0 120 70">
+          <path d="M10,65 A55,55 0 0,1 110,65" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="10" stroke-linecap="round"/>
+          <path id="arcFill" d="M10,65 A55,55 0 0,1 110,65" fill="none" stroke="#AFA9EC" stroke-width="10" stroke-linecap="round"
+            stroke-dasharray="173" stroke-dashoffset="173" style="transition: stroke-dashoffset 1s ease, stroke 0.5s;"/>
+        </svg>
+        <div class="pc-gauge-pct" id="pctDisplay">0%</div>
+        <div class="pc-gauge-verdict" id="verdictDisplay" style="color: rgba(255,255,255,0.5);">—</div>
+      </div>
+
+      <div>
+        <div class="pc-metrics-grid">
+          <div class="pc-metric">
+            <div class="pc-metric-label">Jaccard</div>
+            <div class="pc-metric-value" id="jaccardVal">—</div>
+            <div class="pc-metric-bar-track">
+              <div class="pc-metric-bar" id="jaccardBar" style="background: linear-gradient(90deg, #AFA9EC, #7F77DD);"></div>
+            </div>
+          </div>
+          <div class="pc-metric">
+            <div class="pc-metric-label">Cosine</div>
+            <div class="pc-metric-value" id="cosineVal">—</div>
+            <div class="pc-metric-bar-track">
+              <div class="pc-metric-bar" id="cosineBar" style="background: linear-gradient(90deg, #F0997B, #D85A30);"></div>
+            </div>
+          </div>
+          <div class="pc-metric">
+            <div class="pc-metric-label">LCS Words</div>
+            <div class="pc-metric-value" id="lcsVal">—</div>
+            <div class="pc-metric-bar-track">
+              <div class="pc-metric-bar" id="lcsBar" style="background: linear-gradient(90deg, #ED93B1, #D4537E);"></div>
+            </div>
+          </div>
+          <div class="pc-metric">
+            <div class="pc-metric-label">Phrase Matches</div>
+            <div class="pc-metric-value" id="phraseVal">—</div>
+            <div class="pc-metric-bar-track">
+              <div class="pc-metric-bar" id="phraseBar" style="background: linear-gradient(90deg, #FAC775, #EF9F27);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pc-snippet-card">
+        <div class="pc-snippet-label">Matching snippet detected in document B</div>
+        <div class="pc-snippet-text" id="snippetDisplay">No snippet detected.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function loadA(e){
+  const r = new FileReader();
+  r.onload = ev => document.getElementById('text1').value = ev.target.result;
+  r.readAsText(e.target.files[0]);
+}
+
+function loadB(e){
+  const r = new FileReader();
+  r.onload = ev => document.getElementById('text2').value = ev.target.result;
+  r.readAsText(e.target.files[0]);
+}
+
+function setArc(percent) {
+  const arc = document.getElementById('arcFill');
+  const total = 173;
+  const offset = total - (percent / 100) * total;
+  arc.style.strokeDashoffset = offset;
+  if (percent < 30) arc.style.stroke = '#5DCAA5';
+  else if (percent < 70) arc.style.stroke = '#EF9F27';
+  else arc.style.stroke = '#E24B4A';
+}
+
+function setBar(id, pct) {
+  document.getElementById(id).style.width = Math.min(pct, 100) + '%';
+}
+
+function highlightSnippet(text, snippet) {
+  if (!snippet || snippet.length < 3) return text;
+  const esc = snippet.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return text.replace(new RegExp(esc, 'gi'), m => `<span class="highlight">${m}</span>`);
+}
+
+async function analyze(){
+  const t1 = document.getElementById('text1').value;
+  const t2 = document.getElementById('text2').value;
+  if (!t1 || !t2) { alert('Enter both documents'); return; }
+
+  try {
+    const res = await fetch('http://localhost:3000/compare', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text1: t1, text2: t2 })
+    });
+
+    const data = await res.json();
+    const out = data.result || '';
+
+    const overall = parseFloat((out.match(/Overall:\s*(\d+\.?\d*)/) || [,0])[1]);
+    const jaccard = parseFloat((out.match(/Jaccard:\s*(\d+\.?\d*)/) || [,0])[1]);
+    const cosine  = parseFloat((out.match(/Cosine\s*:\s*(\d+\.?\d*)/) || [,0])[1]);
+    const lcs     = parseInt((out.match(/LCS\s*:\s*(\d+)/) || [,0])[1]);
+    const phrase  = parseInt((out.match(/Phrase\s*:\s*(\d+)/) || [,0])[1]);
+    const verdict = (out.match(/Verdict:\s*([^\n\r]+)/) || [,'—'])[1].trim();
+    const snippet = (out.match(/Snippet:\s*([^\n\r]+)/) || [,''])[1].trim();
+
+    document.getElementById('resultArea').style.display = 'block';
+
+    setTimeout(() => {
+      setArc(overall);
+      document.getElementById('pctDisplay').textContent = Math.round(overall) + '%';
+      document.getElementById('verdictDisplay').textContent = verdict;
+
+      const vColors = { 'HIGH PLAGIARISM': '#E24B4A', 'MODERATE': '#EF9F27', 'LOW': '#5DCAA5', 'ORIGINAL': '#AFA9EC' };
+      document.getElementById('verdictDisplay').style.color = vColors[verdict] || 'rgba(255,255,255,0.6)';
+
+      document.getElementById('jaccardVal').textContent = Math.round(jaccard) + '%';
+      document.getElementById('cosineVal').textContent  = Math.round(cosine) + '%';
+      document.getElementById('lcsVal').textContent     = isNaN(lcs) ? '—' : lcs;
+      document.getElementById('phraseVal').textContent  = isNaN(phrase) ? '—' : phrase;
+
+      setBar('jaccardBar', jaccard);
+      setBar('cosineBar', cosine);
+      setBar('lcsBar', Math.min(lcs * 2, 100));
+      setBar('phraseBar', Math.min(phrase * 5, 100));
+
+      const snip = document.getElementById('snippetDisplay');
+      snip.innerHTML = snippet ? highlightSnippet(t2.slice(0, 600), snippet) : 'No significant snippet detected.';
+    }, 50);
+
+  } catch(e) {
+    console.error(e);
+    alert('Could not connect to local analysis server.');
+  }
+}
+</script>
